@@ -1,0 +1,12 @@
+---
+      - hosts: group1
+        become: true
+        
+        tasks:
+         - yum: name=httpd state=latest
+           register: install_output
+           
+         - debug: msg=install_output
+         
+         - service: name=httpd state=started enabled=true
+           when: install_output|success
